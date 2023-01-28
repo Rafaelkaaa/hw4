@@ -8,6 +8,6 @@ public class App {
     public static void main(String[] args) throws SQLException {
         Database database = Database.getINSTANCE();
         System.out.println(new DatabaseQueryService()
-                .findMaxProjectsClient(database, "SQL/find_max_projects_client.sql"));
+                .findMaxProjectsClient(database));
     }
 }

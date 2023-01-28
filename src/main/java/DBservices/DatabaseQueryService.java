@@ -22,8 +22,8 @@ public class DatabaseQueryService {
         return database.statementQuery(sql);
     }
 
-    public List<MaxProjectCountClient> findMaxProjectsClient(Database database, String path) throws SQLException {
-        ResultSet rs = d(database, path);
+    public List<MaxProjectCountClient> findMaxProjectsClient(Database database) throws SQLException {
+        ResultSet rs = d(database, "resources/SQL/find_max_projects_client.sql");
         List<MaxProjectCountClient> MPCCList  = new ArrayList();
         while (rs.next()){
             MaxProjectCountClient MPCC = new MaxProjectCountClient();
