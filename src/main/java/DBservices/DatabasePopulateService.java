@@ -5,7 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class DatabasePopulateService {
-    public static final String POPULATE_BD_FILENAME = "resources/SQL/populate_db.sql";
+    public static final String POPULATE_BD_FILENAME = "src/main/resources/SQL/populate_db.sql";
 
     public static void main(String[] args){
         Database database = Database.getINSTANCE();

@@ -5,7 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class DatabaseInitService {
-    public static final String INIT_BD_FILENAME = "resources/SQL/init_db.sql";
+    public static final String INIT_BD_FILENAME = "src/main/resources/SQL/init_db.sql";
 
     public static void main(String[] args) {
         Database database = Database.getINSTANCE();
