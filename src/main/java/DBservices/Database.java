@@ -4,7 +4,7 @@ import java.sql.*;
 
 public class Database {
     private static final Database INSTANCE = new Database();
-    Connection connection;
+    public Connection connection;
 
     public Database() {
          try {
@@ -31,12 +31,23 @@ public class Database {
         }
         return -1;
     }
-    public ResultSet statementQuery(String sql){
-        try (Statement statement = getConnection().createStatement()) {
+    public ResultSet statementQuery(String sql) {
+        Statement statement = null;
+        try {
+             statement = getConnection().createStatement();
             return statement.executeQuery(sql);
         }
         catch (SQLException throwables) {
             throwables.printStackTrace();
+        }
+        finally {
+            if (statement != null){
+                try {
+                    statement.closeOnCompletion();
+                } catch (SQLException throwables) {
+                  throw new RuntimeException(throwables);
+                }
+            }
         }
         return null;
     }

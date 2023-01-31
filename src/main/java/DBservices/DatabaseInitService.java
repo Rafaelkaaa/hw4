@@ -3,6 +3,7 @@ package DBservices;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.sql.SQLException;
 
 public class DatabaseInitService {
     public static final String INIT_BD_FILENAME = "src/main/resources/SQL/init_db.sql";
