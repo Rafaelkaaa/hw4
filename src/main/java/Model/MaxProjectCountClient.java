@@ -2,7 +2,7 @@ package Model;
 
 import lombok.Setter;
 
-public class MaxProjectCountClient {
+public class MaxProjectCountClient{
     private String name;
     private int projectCount;
 
@@ -12,5 +12,14 @@ public class MaxProjectCountClient {
 
     public void setProjectCount(int projectCount) {
         this.projectCount = projectCount;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("MaxProjectCountClient{");
+        sb.append("name='").append(name).append('\'');
+        sb.append(", projectCount=").append(projectCount);
+        sb.append('}');
+        return sb.toString();
     }
 }
