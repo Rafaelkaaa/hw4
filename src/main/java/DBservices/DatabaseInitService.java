@@ -8,9 +8,10 @@ import java.sql.SQLException;
 public class DatabaseInitService {
     public static final String INIT_BD_FILENAME = "src/main/resources/SQL/init_db.sql";
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         Database database = Database.getINSTANCE();
         System.out.println(new DatabaseInitService().initDB(database));
+        database.connection.close();
     }
 
     public int initDB (Database database){
