@@ -1,4 +1,4 @@
-package Model;
+package model;
 
 public class ProjectPrice {
     private String name;
@@ -7,14 +7,13 @@ public class ProjectPrice {
     public void setName(String name) {
         this.name = name;
     }
-
     public void setPrise(int prise) {
         this.prise = prise;
     }
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("ProjectPrice{");
+        final StringBuilder sb = new StringBuilder("{");
         sb.append("name='").append(name).append('\'');
         sb.append(", prise=").append(prise);
         sb.append('}');

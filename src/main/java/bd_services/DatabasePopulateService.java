@@ -1,4 +1,4 @@
-package DBservices;
+package bd_services;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -10,12 +10,12 @@ public class DatabasePopulateService {
 
     public static void main(String[] args) throws SQLException {
         Database database = Database.getINSTANCE();
-        new DatabasePopulateService().populateDB(database);
+        new DatabasePopulateService().populateDb(database);
         database.connection.close();
     }
 
-    public void populateDB (Database database){
-        String  sql = null;
+    public void populateDb(Database database) {
+        String sql = null;
         try {
             sql = String.join("\n", Files.readAllLines(Paths.get(POPULATE_BD_FILENAME)));
         } catch (IOException e) {

@@ -1,7 +1,7 @@
-import DBservices.Database;
-import DBservices.DatabaseQueryService;
+import bd_services.Database;
+import bd_services.DatabaseQueryService;
+
 import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.List;
 
 
@@ -12,23 +12,23 @@ public class App {
 
         List maxProjectCountClient = databaseQueryService.
                 findMaxProjectsClient(database);
-        System.out.println(maxProjectCountClient.toString());
+        System.out.println("Max Project Count Client" + maxProjectCountClient.toString());
 
         List longestProject = databaseQueryService
                 .findLongestProject(database);
-        System.out.println(longestProject.toString());
+        System.out.println("Longest Project" + longestProject.toString());
 
         List maxSalaryWorkers = databaseQueryService
                 .findMaxSalaryWorker(database);
-        System.out.println(maxSalaryWorkers.toString());
+        System.out.println("Max Salary Worker" + maxSalaryWorkers.toString());
 
         List youngestEldestWorker = databaseQueryService
                 .findYoungestEldestWorkers(database);
-        System.out.println(youngestEldestWorker.toString());
+        System.out.println("Youngest and Eldest Workers" + youngestEldestWorker.toString());
 
         List projectPrices = databaseQueryService
                 .printProjectPrices(database);
-        System.out.println(projectPrices.toString());
+        System.out.println("Projects Prices" + projectPrices.toString());
 
         database.connection.close();
     }

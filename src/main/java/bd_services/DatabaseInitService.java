@@ -1,4 +1,4 @@
-package DBservices;
+package bd_services;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -10,14 +10,14 @@ public class DatabaseInitService {
 
     public static void main(String[] args) throws SQLException {
         Database database = Database.getINSTANCE();
-        System.out.println(new DatabaseInitService().initDB(database));
+        System.out.println(new DatabaseInitService().initDb(database));
         database.connection.close();
     }
 
-    public int initDB (Database database){
-        String  sql = null;
+    public int initDb(Database database) {
+        String sql = null;
         try {
-          sql = String.join("\n", Files.readAllLines(Paths.get(INIT_BD_FILENAME)));
+            sql = String.join("\n", Files.readAllLines(Paths.get(INIT_BD_FILENAME)));
         } catch (IOException e) {
             e.printStackTrace();
         }
