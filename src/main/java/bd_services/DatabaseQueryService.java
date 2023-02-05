@@ -12,7 +12,7 @@ import java.util.List;
 public class DatabaseQueryService {
 
     public List<MaxProjectCountClient> findMaxProjectsClient() throws SQLException {
-        try (Connection connection = DriverManager.getConnection("jdbc:h2:~/HW3", "sa", "");
+        try (Connection connection = Database.getConnection();
              Statement statement = connection.createStatement();
         ) {
             String sql = null;
@@ -35,7 +35,7 @@ public class DatabaseQueryService {
     }
 
     public List<LongestProject> findLongestProject() throws SQLException {
-        try (Connection connection = DriverManager.getConnection("jdbc:h2:~/HW3", "sa", "");
+        try (Connection connection = Database.getConnection();
              Statement statement = connection.createStatement();
         ) {
             String sql = null;
@@ -58,7 +58,7 @@ public class DatabaseQueryService {
     }
 
     public List<MaxSalaryWorker> findMaxSalaryWorker() throws SQLException {
-        try (Connection connection = DriverManager.getConnection("jdbc:h2:~/HW3", "sa", "");
+        try (Connection connection = Database.getConnection();
              Statement statement = connection.createStatement();
         ) {
             String sql = null;
@@ -81,7 +81,7 @@ public class DatabaseQueryService {
     }
 
     public List<YoungestEldestWorker> findYoungestEldestWorkers() throws SQLException {
-        try (Connection connection = DriverManager.getConnection("jdbc:h2:~/HW3", "sa", "");
+        try (Connection connection = Database.getConnection();
              Statement statement = connection.createStatement();
         ) {
             String sql = null;
@@ -105,7 +105,7 @@ public class DatabaseQueryService {
     }
 
     public List<ProjectPrice> printProjectPrices() throws SQLException {
-            try (Connection connection = DriverManager.getConnection("jdbc:h2:~/HW3", "sa", "");
+            try (Connection connection = Database.getConnection();
                  Statement statement = connection.createStatement();
             ) {
                 String sql = null;
