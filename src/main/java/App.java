@@ -7,29 +7,27 @@ import java.util.List;
 
 public class App {
     public static void main(String[] args) throws SQLException {
-        Database database = Database.getINSTANCE();
+
         DatabaseQueryService databaseQueryService = new DatabaseQueryService();
 
         List maxProjectCountClient = databaseQueryService.
-                findMaxProjectsClient(database);
+                findMaxProjectsClient();
         System.out.println("Max Project Count Client" + maxProjectCountClient.toString());
 
         List longestProject = databaseQueryService
-                .findLongestProject(database);
+                .findLongestProject();
         System.out.println("Longest Project" + longestProject.toString());
 
         List maxSalaryWorkers = databaseQueryService
-                .findMaxSalaryWorker(database);
+                .findMaxSalaryWorker();
         System.out.println("Max Salary Worker" + maxSalaryWorkers.toString());
 
         List youngestEldestWorker = databaseQueryService
-                .findYoungestEldestWorkers(database);
+                .findYoungestEldestWorkers();
         System.out.println("Youngest and Eldest Workers" + youngestEldestWorker.toString());
 
         List projectPrices = databaseQueryService
-                .printProjectPrices(database);
+                .printProjectPrices();
         System.out.println("Projects Prices" + projectPrices.toString());
-
-        database.connection.close();
     }
 }

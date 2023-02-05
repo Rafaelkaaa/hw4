@@ -3,25 +3,29 @@ package bd_services;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class DatabaseInitService {
-    public static final String INIT_BD_FILENAME = "src/main/resources/SQL/init_db.sql";
+    public static final String INIT_BD_FILENAME = "src/main/resources/sql/init_db.sql";
 
     public static void main(String[] args) throws SQLException {
-        Database database = Database.getINSTANCE();
-        System.out.println(new DatabaseInitService().initDb(database));
-        database.connection.close();
+        new DatabaseInitService().initDb();
     }
 
-    public int initDb(Database database) {
-        String sql = null;
-        try {
-            sql = String.join("\n", Files.readAllLines(Paths.get(INIT_BD_FILENAME)));
-        } catch (IOException e) {
-            e.printStackTrace();
+    public void initDb() throws SQLException {
+        try (Connection connection = DriverManager.getConnection("jdbc:h2:~/HW3", "sa", "");
+             Statement statement = connection.createStatement();
+        ) {
+            String sql = null;
+            try {
+                sql = String.join("\n", Files.readAllLines(Paths.get(INIT_BD_FILENAME)));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            statement.executeUpdate(sql);
         }
-        return database.statementUpdate(sql);
     }
-
 }
