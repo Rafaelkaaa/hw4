@@ -12,17 +12,16 @@ import java.util.List;
 public class DatabaseQueryService {
 
     public List<MaxProjectCountClient> findMaxProjectsClient() throws SQLException {
+        String sql = null;
+        try {
+            sql = String.join("\n", Files.readAllLines(Paths
+                    .get("src/main/resources/sql/find_max_projects_client.sql")));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         try (Connection connection = Database.getConnection();
-             Statement statement = connection.createStatement();
-        ) {
-            String sql = null;
-            try {
-                sql = String.join("\n", Files.readAllLines(Paths
-                        .get("src/main/resources/sql/find_max_projects_client.sql")));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            ResultSet resultSet = statement.executeQuery(sql);
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            ResultSet resultSet = statement.executeQuery();
             List<MaxProjectCountClient> mpccList = new ArrayList();
             while (resultSet.next()) {
                 MaxProjectCountClient mpcc = new MaxProjectCountClient();
@@ -35,17 +34,16 @@ public class DatabaseQueryService {
     }
 
     public List<LongestProject> findLongestProject() throws SQLException {
+        String sql = null;
+        try {
+            sql = String.join("\n", Files.readAllLines(Paths
+                    .get("src/main/resources/sql/find_longest_project.sql")));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         try (Connection connection = Database.getConnection();
-             Statement statement = connection.createStatement();
-        ) {
-            String sql = null;
-            try {
-                sql = String.join("\n", Files.readAllLines(Paths
-                        .get("src/main/resources/sql/find_longest_project.sql")));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            ResultSet resultSet = statement.executeQuery(sql);
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            ResultSet resultSet = statement.executeQuery();
             List<LongestProject> lpList = new ArrayList();
             while (resultSet.next()) {
                 LongestProject lp = new LongestProject();
@@ -58,17 +56,17 @@ public class DatabaseQueryService {
     }
 
     public List<MaxSalaryWorker> findMaxSalaryWorker() throws SQLException {
+        String sql = null;
+        try {
+            sql = String.join("\n", Files.readAllLines(Paths
+                    .get("src/main/resources/sql/find_max_salary_worker.sql")));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         try (Connection connection = Database.getConnection();
-             Statement statement = connection.createStatement();
+             PreparedStatement statement = connection.prepareStatement(sql);
         ) {
-            String sql = null;
-            try {
-                sql = String.join("\n", Files.readAllLines(Paths
-                        .get("src/main/resources/sql/find_max_salary_worker.sql")));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            ResultSet resultSet = statement.executeQuery(sql);
+            ResultSet resultSet = statement.executeQuery();
             List<MaxSalaryWorker> mswList = new ArrayList();
             while (resultSet.next()) {
                 MaxSalaryWorker msw = new MaxSalaryWorker();
@@ -81,17 +79,17 @@ public class DatabaseQueryService {
     }
 
     public List<YoungestEldestWorker> findYoungestEldestWorkers() throws SQLException {
+        String sql = null;
+        try {
+            sql = String.join("\n", Files.readAllLines(Paths
+                    .get("src/main/resources/sql/find_youngest_eldest_workers.sql")));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         try (Connection connection = Database.getConnection();
-             Statement statement = connection.createStatement();
+             PreparedStatement statement = connection.prepareStatement(sql)
         ) {
-            String sql = null;
-            try {
-                sql = String.join("\n", Files.readAllLines(Paths
-                        .get("src/main/resources/sql/find_youngest_eldest_workers.sql")));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            ResultSet resultSet = statement.executeQuery(sql);
+            ResultSet resultSet = statement.executeQuery();
             List<YoungestEldestWorker> yewList = new ArrayList();
             while (resultSet.next()) {
                 YoungestEldestWorker yew = new YoungestEldestWorker();
@@ -105,25 +103,26 @@ public class DatabaseQueryService {
     }
 
     public List<ProjectPrice> printProjectPrices() throws SQLException {
-            try (Connection connection = Database.getConnection();
-                 Statement statement = connection.createStatement();
-            ) {
-                String sql = null;
-                try {
-                    sql = String.join("\n", Files.readAllLines(Paths
-                            .get("src/main/resources/sql/print_project_prices.sql")));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                ResultSet resultSet = statement.executeQuery(sql);
-        List<ProjectPrice> ppList = new ArrayList();
-        while (resultSet.next()) {
-            ProjectPrice pp = new ProjectPrice();
-            pp.setName(resultSet.getString("NAME"));
-            pp.setPrise(resultSet.getInt("PRICE"));
-            ppList.add(pp);
+        String sql = null;
+        try {
+            sql = String.join("\n", Files.readAllLines(Paths
+                    .get("src/main/resources/sql/print_project_prices.sql")));
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        return ppList;
-    }
+        try (Connection connection = Database.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql);
+        ) {
+
+            ResultSet resultSet = statement.executeQuery();
+            List<ProjectPrice> ppList = new ArrayList();
+            while (resultSet.next()) {
+                ProjectPrice pp = new ProjectPrice();
+                pp.setName(resultSet.getString("NAME"));
+                pp.setPrise(resultSet.getInt("PRICE"));
+                ppList.add(pp);
+            }
+            return ppList;
+        }
     }
 }

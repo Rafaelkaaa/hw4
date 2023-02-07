@@ -4,8 +4,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 public class DatabaseInitService {
     public static final String INIT_BD_FILENAME = "src/main/resources/sql/init_db.sql";
@@ -15,16 +15,18 @@ public class DatabaseInitService {
     }
 
     public void initDb() throws SQLException {
-        try (Connection connection = Database.getConnection();
-             Statement statement = connection.createStatement();
-        ) {
+        {
             String sql = null;
             try {
                 sql = String.join("\n", Files.readAllLines(Paths.get(INIT_BD_FILENAME)));
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            statement.executeUpdate(sql);
+            try (Connection connection = Database.getConnection();
+                 PreparedStatement statement = connection.prepareStatement(sql);
+            ) {
+                statement.executeUpdate();
+            }
         }
     }
 }
