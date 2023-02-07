@@ -1,0 +1,68 @@
+[
+  {
+    "name": "Winston Smith",
+    "birthday": "1945-03-07",
+    "level": "Middle",
+    "salary": 3000
+  },
+  {
+    "name": "Bernard Marx",
+    "birthday": "1932-05-05",
+    "level": "Trainee",
+    "salary": 1000
+  },
+  {
+    "name": "George Orwell",
+    "birthday": "1950-01-21",
+    "level": "Junior",
+    "salary": 1500
+  },
+  {
+    "name": "Eric Blair",
+    "birthday": "1903-06-25",
+    "level": "Senior",
+    "salary": 5000
+  },
+  {
+    "name": "Aldous Huxley",
+    "birthday": "1963-11-22",
+    "level": "Senior",
+    "salary": 4500
+  },
+  {
+    "name": "Helmholtz Watson",
+    "birthday": "1931-08-31",
+    "level": "Trainee",
+    "salary": 1000
+  },
+  {
+    "name": "Ray Bradbury",
+    "birthday": "1920-08-22",
+    "level": "Middle",
+    "salary": 2000
+  },
+  {
+    "name": "Douglas Spaulding",
+    "birthday": "2010-09-17",
+    "level": "Middle",
+    "salary": 4000
+  },
+  {
+    "name": "Tom Spaulding",
+    "birthday": "2012-06-05",
+    "level": "Middle",
+    "salary": 3000
+  },
+  {
+    "name": "Guy Montag",
+    "birthday": "1953-09-29",
+    "level": "Junior",
+    "salary": 1700
+  },
+  {
+    "name": "Clarisse McClellan",
+    "birthday": "1967-04-26",
+    "level": "Junior",
+    "salary": 1500
+  }
+]
