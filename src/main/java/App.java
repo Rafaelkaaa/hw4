@@ -1,14 +1,19 @@
-import bd_services.Database;
-import bd_services.DatabaseQueryService;
-
-import java.sql.SQLException;
-import java.util.List;
+import db_services.ClientService;
 
 
 public class App {
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) {
+        ClientService clientService = new ClientService();
+        System.out.println(clientService.create("Robert Martin"));
+        System.out.println(clientService.getById(114));
+        clientService.setName(114, "Salah");
+        System.out.println(clientService.getById(114));
+        clientService.deleteById(113);
+        System.out.println(clientService.listAll().toString());
 
-        DatabaseQueryService databaseQueryService = new DatabaseQueryService();
+
+
+      /*  DatabaseQueryService databaseQueryService = new DatabaseQueryService();
 
         List maxProjectCountClient = databaseQueryService.
                 findMaxProjectsClient();
@@ -29,5 +34,6 @@ public class App {
         List projectPrices = databaseQueryService
                 .printProjectPrices();
         System.out.println("Projects Prices" + projectPrices.toString());
+       */
     }
 }
