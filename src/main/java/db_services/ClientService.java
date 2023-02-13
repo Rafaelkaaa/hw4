@@ -11,10 +11,73 @@ import java.util.List;
 
 public class ClientService {
 
+    private final static String SELECT_ALL_CLIENTS = "SELECT * FROM CLIENT";
+    private final static String SELECT_MAX_INDEX_FROM_CLIENT = "SELECT MAX (ID) FROM CLIENT";
+    private final static String INSERT_CLIENT = "INSERT INTO CLIENT (NAME) VALUES (?)";
+    private final static String DELETE_CLIENT_BY_ID = "DELETE FROM CLIENT WHERE ID = ?";
+    private final static String UPDATE_CLIENT_NAME_BY_ID = "UPDATE CLIENT SET NAME = ? WHERE ID = ?";
+
+
     public long create(String name) {
         validationClientName(name);
-        createNewClient(name);
-        return selectMaxIndexFromClient();
+        try (Connection connection = Database.getConnection();
+             PreparedStatement statement = connection.prepareStatement(INSERT_CLIENT)) {
+            statement.setString(1, name);
+            statement.executeUpdate();
+            System.out.println(connection.isClosed());
+            System.out.println(statement.isClosed());
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return maxIndex();
+    }
+
+
+    public List<Client> listAll() {
+        try (Connection connection = Database.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SELECT_ALL_CLIENTS);
+             ResultSet resultSet = statement.executeQuery()) {
+            List<Client> clientList = new ArrayList();
+            while (resultSet.next()) {
+                Client client = new Client();
+                client.setId(resultSet.getLong("ID"));
+                client.setName(resultSet.getString("NAME"));
+                clientList.add(client);
+            }
+            return clientList;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        throw new NullPointerException();
+    }
+
+    public String getById(long id) {
+        return clientByValidId(id).toString();
+    }
+
+    public void deleteById(long id) {
+        clientByValidId(id);
+        try (Connection connection = Database.getConnection();
+             PreparedStatement statement = connection.prepareStatement(DELETE_CLIENT_BY_ID)) {
+            statement.setLong(1, id);
+            statement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    public void setName(long id, String name) {
+        validationClientName(name);
+        clientByValidId(id);
+        try (Connection connection = Database.getConnection();
+             PreparedStatement statement = connection.prepareStatement(UPDATE_CLIENT_NAME_BY_ID)) {
+            statement.setString(1, name);
+            statement.setLong(2, id);
+            statement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
     }
 
     private void validationClientName(String name) {
@@ -29,37 +92,18 @@ public class ClientService {
         }
     }
 
-    public static PreparedStatement createStatement(String sqlRequest) throws SQLException {
-        Connection connection = Database.getConnection();
-        return connection
-                .prepareStatement(sqlRequest);
-    }
-
-    private void createNewClient(String name) {
-        try (PreparedStatement statementForCreate =
-                     createStatement("INSERT INTO CLIENT (NAME) VALUES (?)")) {
-            statementForCreate.setString(1, name);
-            statementForCreate.executeUpdate();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-    }
-
-    private long selectMaxIndexFromClient() {
-        try (PreparedStatement statementForSelect =
-                     createStatement("SELECT MAX (ID) FROM CLIENT")) {
-            ResultSet resultSet = statementForSelect.executeQuery();
+    private long maxIndex() {
+        try (Connection connection = Database.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SELECT_MAX_INDEX_FROM_CLIENT);
+             ResultSet resultSet = statement.executeQuery()) {
             resultSet.next();
             return resultSet.getLong("MAX(ID)");
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-            return -1;
         }
+        throw new NullPointerException();
     }
 
-    public String getById(long id) {
-        return clientByValidId(id).toString();
-    }
 
     private Client clientByValidId(long id) {
         List<Client> allClients = listAll();
@@ -68,48 +112,7 @@ public class ClientService {
                 return client;
             }
         }
-            throw new IllegalArgumentException("Table doesn't contain index " + id);
-
-    }
-
-    public void deleteById(long id) {
-        clientByValidId(id);
-        try (PreparedStatement statement =
-                     createStatement("DELETE FROM CLIENT WHERE ID = " + id)) {
-            statement.executeUpdate();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-    }
-
-    public List<Client> listAll() {
-        try (PreparedStatement statementForSelect =
-                     createStatement("SELECT * FROM CLIENT")) {
-            ResultSet resultSet = statementForSelect.executeQuery();
-            List<Client> clientList = new ArrayList();
-            while (resultSet.next()) {
-                Client client = new Client();
-                client.setId(resultSet.getLong("ID"));
-                client.setName(resultSet.getString("NAME"));
-                clientList.add(client);
-            }
-            return clientList;
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-            return null;
-        }
-    }
-
-    public void setName(long id, String name) {
-        validationClientName(name);
-        clientByValidId(id);
-        try (PreparedStatement statement =
-                     createStatement("UPDATE CLIENT SET NAME = '"
-                             + name + "' WHERE ID = " + id)) {
-            statement.executeUpdate();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
+        throw new IllegalArgumentException("Table doesn't contain index " + id);
     }
 
 

@@ -5,10 +5,10 @@ public class App {
     public static void main(String[] args) {
         ClientService clientService = new ClientService();
         System.out.println(clientService.create("Robert Martin"));
-        System.out.println(clientService.getById(114));
-        clientService.setName(114, "Salah");
-        System.out.println(clientService.getById(114));
-        clientService.deleteById(113);
+        System.out.println(clientService.getById(208));
+        clientService.setName(208, "Rob");
+        System.out.println(clientService.getById(208));
+        clientService.deleteById(168);
         System.out.println(clientService.listAll().toString());
 
 

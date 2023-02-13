@@ -5,11 +5,59 @@ import model.*;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class DatabaseQueryService {
+
+    public long selectMaxIndexFromClient() {
+        try (Connection connection = Database.getConnection();
+             PreparedStatement statementForSelect = connection.
+                     prepareStatement("SELECT MAX (ID) FROM CLIENT")) {
+            ResultSet resultSet = statementForSelect.executeQuery();
+            resultSet.next();
+            return resultSet.getLong("MAX(ID)");
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        throw new NullPointerException();
+    }
+
+    public void insertClient(String name) {
+        try (Connection connection = Database.getConnection();
+             PreparedStatement statementForCreate = connection.
+                     prepareStatement("INSERT INTO CLIENT (NAME) VALUES (?)")) {
+            statementForCreate.setString(1, name);
+            statementForCreate.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    public void deleteClientById(long id) {
+        try (Connection connection = Database.getConnection();
+             PreparedStatement statement = connection.
+                     prepareStatement("DELETE FROM CLIENT WHERE ID = ?")) {
+            statement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    public void updateClientNameById(long id, String name) {
+        try (Connection connection = Database.getConnection();
+             PreparedStatement statement = connection.
+                     prepareStatement("UPDATE CLIENT SET NAME = '"
+                             + name + "' WHERE ID = " + id)) {
+            statement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
 
     public List<MaxProjectCountClient> findMaxProjectsClient() throws SQLException {
         String sql = null;
